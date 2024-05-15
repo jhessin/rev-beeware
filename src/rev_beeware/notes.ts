@@ -1,3 +1,6 @@
+/*
+ * This is all from the REV_stencil repo
+ * */
 export async function remoteHasNewer(localDate: Date): Promise<[boolean, Date]> {
   try {
     let dateJson: iDateJson = await fetch(URL)
