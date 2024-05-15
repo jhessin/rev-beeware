@@ -21,7 +21,7 @@ def run_tests():
             # Turn up verbosity
             "-vv",
             # Disable color
-            "--color=no",
+            # "--color=no",
             # Overwrite the cache directory to somewhere writable
             "-o",
             f"cache_dir={tempfile.gettempdir()}/.pytest_cache",
