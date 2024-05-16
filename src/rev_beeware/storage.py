@@ -28,6 +28,10 @@ class Storage:
         date_res = requests.get(DATE_URL)
         response = json.loads(date_res.text)['REV_Timestamp'][0]['timestamp']
         self.remote_date = datetime.fromisoformat(response)
+        if (not self.local_date or self.local_date < self.remote_date):
+            # TODO: download bible, appendix, and commentary
+            # self.db.table('date').insert({'date': self.remote_date.isoformat()})
+            pass
 
     @property
     def local_date(self) -> datetime | None:
