@@ -9,7 +9,7 @@ from datetime import datetime
 from tinydb import TinyDB
 from os import path
 from toga import App
-from constants import *
+from rev_beeware.constants import *
 import requests
 import json
 
@@ -19,6 +19,7 @@ class Storage:
 
     def __init__(self, app: App):
         self.db = TinyDB(path.join(app.paths.data, 'db.json'))
+        self.db.insert({'null': 'null'})
         date_res = requests.get(DATE_URL)
         response = json.loads(date_res.text)['REV_Timestamp'][0]['timestamp']
         self.remote_date = datetime.fromisoformat(response)
