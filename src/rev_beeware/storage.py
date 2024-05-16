@@ -26,7 +26,10 @@ class Storage:
 
     @property
     def local_date(self) -> datetime | None:
-        return self.db.table('date').get()
+        try:
+            return datetime.fromisoformat(self.db.table('date').all()[0]['date'])
+        except IndexError:
+            return None
 
 
 if __name__ == '__main__':
