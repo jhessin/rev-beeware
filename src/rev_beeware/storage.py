@@ -4,3 +4,29 @@ local hard drive.
 
 I will try to use TinyDB and toga.paths.Paths.data for a location.
 """
+from datetime import datetime
+
+from tinydb import TinyDB
+from os import path
+from toga import App
+from constants import *
+import requests
+import json
+
+
+class Storage:
+    db: TinyDB
+
+    def __init__(self, app: App):
+        self.db = TinyDB(path.join(app.paths.data, 'db.json'))
+        date_res = requests.get(DATE_URL)
+        response = json.loads(date_res.text)['REV_Timestamp'][0]['timestamp']
+        self.remote_date = datetime.fromisoformat(response)
+
+    @property
+    def local_date(self) -> datetime | None:
+        return self.db.table('date').get()
+
+
+if __name__ == '__main__':
+    storage = Storage(App('REV'))
