@@ -14,6 +14,7 @@ class REVBeeware(toga.App):
     web_view: toga.WebView
     verse_input: toga.TextInput
     load_page: toga.Button.on_press
+    storage: Storage
 
     def startup(self):
         """Construct and show the Toga application.
@@ -26,7 +27,6 @@ class REVBeeware(toga.App):
         """
 
         self.web_view = toga.WebView(
-            on_webview_load=self.on_webview_loaded,
             style=Pack(flex=1)
         )
         self.verse_input = toga.TextInput(
@@ -55,6 +55,7 @@ class REVBeeware(toga.App):
             ],
             style=Pack(direction=COLUMN),
         )
+        self.storage = Storage(self)
 
         self.main_window = toga.MainWindow(title=self.formal_name)
         self.main_window.content = main_box
@@ -65,15 +66,8 @@ class REVBeeware(toga.App):
         This executes when you hit the 'go' button.
         """
         # self.web_view.url = self.verse_input.value
-        self.storage = Storage(self)
         result = f" remote: {self.storage.remote_date} <br> local: {self.storage.local_date}"
         self.web_view.set_content('/', result)
-
-    def on_webview_loaded(self, widget):
-        """
-        This executes whenever the web-view is loaded.
-        """
-        self.verse_input.value = self.web_view.url or "https://www.revisedenglishversion.com/"
 
 
 def main():
