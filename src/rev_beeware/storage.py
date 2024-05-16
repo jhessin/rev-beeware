@@ -5,6 +5,7 @@ local hard drive.
 I will try to use TinyDB and toga.paths.Paths.data for a location.
 """
 from datetime import datetime
+import os
 
 from tinydb import TinyDB
 from os import path
@@ -18,6 +19,10 @@ class Storage:
     db: TinyDB
 
     def __init__(self, app: App):
+        db_path = path.join(app.paths.data, 'db.json')
+        if not os.path.exists(db_path):
+            os.mkdir(app.paths.data)
+            open(db_path, 'a').close()
         self.db = TinyDB(path.join(app.paths.data, 'db.json'))
         self.db.insert({'null': 'null'})
         date_res = requests.get(DATE_URL)
