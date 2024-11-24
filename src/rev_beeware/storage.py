@@ -3,11 +3,13 @@ This will handle everything about downloading the REV and storing it to the
 local hard drive.
 
 I will try to use TinyDB and toga.paths.Paths.data for a location.
+Trying Buzhug next
 """
 from datetime import datetime
 import os
 
-from tinydb import TinyDB
+# from tinydb import TinyDB
+from buzhug import Base
 from os import path
 from toga import App
 from rev_beeware.constants import *
@@ -16,14 +18,14 @@ import json
 
 
 class Storage:
-    db: TinyDB
+    # db: TinyDB
 
     def __init__(self, app: App):
         db_path = path.join(app.paths.data, 'db.json')
         if not os.path.exists(db_path):
             os.mkdir(app.paths.data)
             open(db_path, 'a').close()
-        self.db = TinyDB(path.join(app.paths.data, 'db.json'))
+        # self.db = TinyDB(path.join(app.paths.data, 'db.json'))
         self.db.insert({'null': 'null'})
 
     @property
